@@ -11,9 +11,11 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './slices/auth/slice';
+import registrationReducer from './slices/registration/slice';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
+	registration: registrationReducer,
 });
 
 export type RootReducer = ReturnType<typeof rootReducer>;

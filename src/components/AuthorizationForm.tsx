@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { PropsWithChildren } from 'react';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { selectAuth } from '../store/slices/auth/selectors';
-import { Status } from '../store/slices/auth/types';
+import { Status } from '../models/Status';
 
 type AuthorizationFormProps = {
 	onFinish: () => void;

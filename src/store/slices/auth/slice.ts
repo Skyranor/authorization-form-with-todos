@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../../models/IUser';
+import { Status } from '../../../models/Status';
 import { fetchAuthUser } from './asyncActions';
-import { AuthState, Status } from './types';
+import { AuthState } from './types';
 
 export const initialState: AuthState = {
 	authToken: '',
@@ -28,6 +29,7 @@ const authSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(fetchAuthUser.pending, (state, action) => {
 			state.loading = Status.PENDING;
+			state.errorMessage = '';
 			console.log(state, action);
 		});
 
@@ -36,6 +38,7 @@ const authSlice = createSlice({
 			(state, action: PayloadAction<{ token: string }>) => {
 				state.loading = Status.SUCCEEDED;
 				state.authToken = action.payload.token;
+				state.errorMessage = '';
 				console.log(state, action);
 			}
 		);
