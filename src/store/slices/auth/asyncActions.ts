@@ -6,11 +6,11 @@ export const fetchAuthUser = createAsyncThunk<{ token: string }, IUser>(
 	'auth/fetchAuthUser',
 	async (user, { rejectWithValue }) => {
 		try {
-			const response = await axios.post(
+			const { data } = await axios.post<{ token: string }>(
 				'https://first-node-js-app-r.herokuapp.com/api/auth/login',
 				user
 			);
-			return response.data as { token: string };
+			return data;
 		} catch (error: any) {
 			return rejectWithValue(error.response.data);
 		}
