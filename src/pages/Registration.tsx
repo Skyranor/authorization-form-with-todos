@@ -17,7 +17,7 @@ import {
 	setPassword,
 	setUsername,
 } from '../store/slices/registration/slice';
-import { fetchRegistrationUser } from '../store/slices/registration/asyncAction';
+import { fetchRegistrationUser } from '../store/slices/registration/asyncActions';
 
 export const Registration: React.FC = () => {
 	const dispatch = useAppDispatch();

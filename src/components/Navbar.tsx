@@ -1,6 +1,6 @@
 import { Layout, Menu, Row } from 'antd';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { setAuthToken } from '../store/slices/auth/slice';
+import { settoken } from '../store/slices/auth/slice';
 import { setIsAuth } from '../store/slices/registration/slice';
 
 export const Navbar: React.FC = () => {
@@ -8,7 +8,7 @@ export const Navbar: React.FC = () => {
 	const menu = [{ key: 1, label: 'Выйти' }];
 
 	const logout = () => {
-		dispatch(setAuthToken(''));
+		dispatch(settoken(''));
 		dispatch(setIsAuth(false));
 	};
 	return (

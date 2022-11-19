@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../../models/IUser';
 import { Status } from '../../../models/Status';
+import { Token } from '../../../models/Token';
 import { fetchAuthUser } from './asyncActions';
 import { AuthState } from './types';
 
 export const initialState: AuthState = {
-	authToken: '',
+	token: '',
 	user: {} as IUser,
 	loading: Status.IDLE,
 	errorMessage: '',
@@ -21,8 +22,8 @@ const authSlice = createSlice({
 		setPassword(state, action: PayloadAction<string>) {
 			state.user.password = action.payload;
 		},
-		setAuthToken(state, action: PayloadAction<string>) {
-			state.authToken = action.payload;
+		settoken(state, action: PayloadAction<string>) {
+			state.token = action.payload;
 		},
 	},
 
@@ -33,15 +34,12 @@ const authSlice = createSlice({
 			console.log(state, action);
 		});
 
-		builder.addCase(
-			fetchAuthUser.fulfilled,
-			(state, action: PayloadAction<{ token: string }>) => {
-				state.loading = Status.SUCCEEDED;
-				state.authToken = action.payload.token;
-				state.errorMessage = '';
-				console.log(state, action);
-			}
-		);
+		builder.addCase(fetchAuthUser.fulfilled, (state, action: PayloadAction<Token>) => {
+			state.loading = Status.SUCCEEDED;
+			state.token = action.payload.token;
+			state.errorMessage = '';
+			console.log(state, action);
+		});
 
 		builder.addCase(fetchAuthUser.rejected, (state, action: any) => {
 			state.loading = Status.FAILED;
@@ -51,6 +49,6 @@ const authSlice = createSlice({
 	},
 });
 
-export const { setEmail, setPassword, setAuthToken } = authSlice.actions;
+export const { setEmail, setPassword, settoken } = authSlice.actions;
 
 export default authSlice.reducer;

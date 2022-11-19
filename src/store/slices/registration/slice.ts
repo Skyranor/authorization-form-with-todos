@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../../models/IUser';
 import { Status } from '../../../models/Status';
-import { fetchRegistrationUser } from './asyncAction';
+import { Token } from '../../../models/Token';
+import { fetchRegistrationUser } from './asyncActions';
 import { RegistrationState } from './types';
 
 const initialState: RegistrationState = {
@@ -41,35 +42,22 @@ const registrationSlice = createSlice({
 		builder.addCase(fetchRegistrationUser.pending, (state, action) => {
 			state.loading = Status.PENDING;
 			state.errorMessage = '';
-			console.log(state, action);
 		});
 
-		builder.addCase(
-			fetchRegistrationUser.fulfilled,
-			(state, action: PayloadAction<{ token: string }>) => {
-				state.loading = Status.SUCCEEDED;
-				state.isAuth = true;
-				state.errorMessage = '';
-				console.log(state, action);
-			}
-		);
+		builder.addCase(fetchRegistrationUser.fulfilled, (state, action: PayloadAction<Token>) => {
+			state.loading = Status.SUCCEEDED;
+			state.isAuth = true;
+			state.errorMessage = '';
+		});
 
 		builder.addCase(fetchRegistrationUser.rejected, (state, action: any) => {
 			state.loading = Status.FAILED;
 			state.errorMessage = action.payload.message;
-			console.log(state, action);
 		});
 	},
 });
 
-export const {
-	setName,
-	setUsername,
-	setEmail,
-	setPassword,
-	setIsMAn,
-	setAge,
-	setIsAuth,
-} = registrationSlice.actions;
+export const { setName, setUsername, setEmail, setPassword, setIsMAn, setAge, setIsAuth } =
+	registrationSlice.actions;
 
 export default registrationSlice.reducer;

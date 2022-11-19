@@ -12,10 +12,12 @@ import {
 import storage from 'redux-persist/lib/storage';
 import authReducer from './slices/auth/slice';
 import registrationReducer from './slices/registration/slice';
+import todosReducer from './slices/todos/slice';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
 	registration: registrationReducer,
+	todosReducer,
 });
 
 export type RootReducer = ReturnType<typeof rootReducer>;
@@ -23,6 +25,7 @@ export type RootReducer = ReturnType<typeof rootReducer>;
 const persistConfig = {
 	key: 'root',
 	storage,
+	// blacklist: ['todosReducer'],
 };
 
 const persistedReducer = persistReducer<RootReducer, AnyAction>(
