@@ -4,6 +4,7 @@ import { selectRegistration } from '../store/slices/registration/selectors';
 
 export default function useIsAuth() {
 	const { token } = useAppSelector(selectAuth);
-	const { isAuth } = useAppSelector(selectRegistration);
-	return token || isAuth;
+	const lsToken = localStorage.getItem('authToken');
+	// const { isAuth } = useAppSelector(selectRegistration);
+	return Boolean(lsToken || token);
 }

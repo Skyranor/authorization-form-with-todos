@@ -8,6 +8,7 @@ import useIsAuth from './hooks/useIsAuth';
 
 const App = () => {
 	const isAuth = useIsAuth();
+
 	return (
 		<Layout className='App'>
 			{isAuth ? <Navbar /> : null}

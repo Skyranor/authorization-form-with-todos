@@ -3,7 +3,6 @@ import { Input, Button, List, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
-import { selectAuth } from '../store/slices/auth/selectors';
 import {
 	fetchTodos,
 	fetchCreateTodo,
@@ -16,7 +15,7 @@ import { selectTodos } from '../store/slices/todos/selectors';
 export const Todos = () => {
 	const dispatch = useAppDispatch();
 	const { todos } = useAppSelector(selectTodos);
-	const { token } = useAppSelector(selectAuth);
+	const token = localStorage.getItem('authToken') as string;
 	const [todoTitle, setTodoTitle] = useState('');
 
 	const colors = ['#3843e0', '#e3276c', '#ae27e3'];
@@ -56,11 +55,7 @@ export const Todos = () => {
 					className='task-input'
 					onKeyDown={(e) => (e.key === 'Enter' ? handleCreateTodo() : false)}
 				/>
-				<Button
-					onClick={handleCreateTodo}
-					type='primary'
-					size={'large'}
-					className='button'>
+				<Button onClick={handleCreateTodo} type='primary' size={'large'} className='button'>
 					Добавить задачу
 				</Button>
 			</div>
@@ -68,9 +63,7 @@ export const Todos = () => {
 				className='task-list'
 				dataSource={todos}
 				renderItem={(item, index) => (
-					<List.Item
-						className='task'
-						style={{ backgroundColor: colors[index % colors.length] }}>
+					<List.Item className='task' style={{ backgroundColor: colors[index % colors.length] }}>
 						<Typography.Text
 							editable={{
 								onChange(value) {

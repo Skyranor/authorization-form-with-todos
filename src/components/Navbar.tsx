@@ -1,15 +1,19 @@
 import { Layout, Menu, Row } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { settoken } from '../store/slices/auth/slice';
-import { setIsAuth } from '../store/slices/registration/slice';
+import { RouteNames } from '../router';
+import { setToken } from '../store/slices/auth/slice';
 
 export const Navbar: React.FC = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+
 	const menu = [{ key: 1, label: 'Выйти' }];
 
 	const logout = () => {
-		dispatch(settoken(''));
-		dispatch(setIsAuth(false));
+		localStorage.removeItem('authToken');
+		dispatch(setToken(''));
+		navigate(RouteNames.LOGIN);
 	};
 	return (
 		<Layout.Header>

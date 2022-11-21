@@ -6,7 +6,7 @@ import { useAppSelector } from '../hooks/useAppSelector';
 import { selectAuth, selectAuthUser } from '../store/slices/auth/selectors';
 import { fetchAuthUser } from '../store/slices/auth/asyncActions';
 import { RouteNames } from '../router';
-import { setEmail, setPassword } from '../store/slices/auth/slice';
+import { setEmail, setErrorMessage, setPassword } from '../store/slices/auth/slice';
 import { Status } from '../models/Status';
 
 export const Login: React.FC = () => {
@@ -15,13 +15,18 @@ export const Login: React.FC = () => {
 	const { loading, errorMessage } = useAppSelector(selectAuth);
 	const { email, password } = useAppSelector(selectAuthUser);
 
-	const onFinish = () => {
+	const onFinish = async () => {
 		dispatch(
 			fetchAuthUser({
 				email,
 				password,
 			})
 		);
+	};
+
+	const handleSwitchAuth = () => {
+		navigate(RouteNames.SIGN_UP);
+		dispatch(setErrorMessage(''));
 	};
 
 	return (
@@ -68,10 +73,7 @@ export const Login: React.FC = () => {
 							},
 						]}
 						hasFeedback>
-						<Input.Password
-							min={8}
-							onChange={(e) => dispatch(setPassword(e.target.value))}
-						/>
+						<Input.Password min={8} onChange={(e) => dispatch(setPassword(e.target.value))} />
 					</Form.Item>
 
 					<Form.Item style={{ margin: 0, textAlign: 'center' }}>
@@ -90,7 +92,7 @@ export const Login: React.FC = () => {
 						<Button
 							size='large'
 							type='link'
-							onClick={() => navigate(RouteNames.SIGN_UP)}
+							onClick={handleSwitchAuth}
 							style={{ padding: '10px 0' }}>
 							У вас нет аккаунта?'
 						</Button>

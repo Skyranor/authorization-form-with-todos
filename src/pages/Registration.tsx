@@ -3,29 +3,34 @@ import { Button, Checkbox, Form, Input, InputNumber, Layout } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { useAppSelector } from '../hooks/useAppSelector';
-import {
-	selectRegistration,
-	selectRegistrationUser,
-} from '../store/slices/registration/selectors';
+import { selectRegistration, selectRegistrationUser } from '../store/slices/registration/selectors';
 import { RouteNames } from '../router';
 import { Status } from '../models/Status';
 import {
 	setAge,
 	setEmail,
 	setIsMAn,
+	setLoading,
 	setName,
 	setPassword,
 	setUsername,
 } from '../store/slices/registration/slice';
 import { fetchRegistrationUser } from '../store/slices/registration/asyncActions';
+import { useEffect } from 'react';
 
 export const Registration: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 	const { loading, errorMessage } = useAppSelector(selectRegistration);
-	const { email, password, age, isMan, name, username } =
-		useAppSelector(selectRegistrationUser);
+	const { email, password, age, isMan, name, username } = useAppSelector(selectRegistrationUser);
+
+	useEffect(() => {
+		if (loading === Status.SUCCEEDED) {
+			navigate(RouteNames.LOGIN);
+		}
+		setLoading(Status.IDLE);
+	}, [loading]);
 
 	const onFinish = async () => {
 		dispatch(fetchRegistrationUser({ name, username, email, password, isMan, age }));
@@ -75,10 +80,7 @@ export const Registration: React.FC = () => {
 							},
 						]}
 						hasFeedback>
-						<Input.Password
-							min={8}
-							onChange={(e) => dispatch(setPassword(e.target.value))}
-						/>
+						<Input.Password min={8} onChange={(e) => dispatch(setPassword(e.target.value))} />
 					</Form.Item>
 
 					<Form.Item
@@ -124,9 +126,7 @@ export const Registration: React.FC = () => {
 						<InputNumber onChange={(e) => dispatch(setAge(Number(e)))} />
 					</Form.Item>
 					<Form.Item name='remember' valuePropName='checked'>
-						<Checkbox onChange={(e) => dispatch(setIsMAn(e.target.checked))}>
-							Вы человек?
-						</Checkbox>
+						<Checkbox onChange={(e) => dispatch(setIsMAn(e.target.checked))}>Вы человек?</Checkbox>
 					</Form.Item>
 					<Form.Item style={{ margin: 0, textAlign: 'center' }}>
 						<Button type='primary' htmlType='submit' loading={loading === Status.PENDING}>

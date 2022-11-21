@@ -6,8 +6,11 @@ import { fetchRegistrationUser } from './asyncActions';
 import { RegistrationState } from './types';
 
 const initialState: RegistrationState = {
-	isAuth: false,
-	user: {} as IUser,
+	user: {
+		email: '',
+		password: '',
+		isMan: false,
+	},
 	loading: Status.IDLE,
 	errorMessage: '',
 };
@@ -34,8 +37,9 @@ const registrationSlice = createSlice({
 		setAge(state, action: PayloadAction<number>) {
 			state.user.age = action.payload;
 		},
-		setIsAuth(state, action: PayloadAction<boolean>) {
-			state.isAuth = action.payload;
+
+		setLoading(state, action: PayloadAction<Status>) {
+			state.loading = action.payload;
 		},
 	},
 	extraReducers: (builder) => {
@@ -46,18 +50,19 @@ const registrationSlice = createSlice({
 
 		builder.addCase(fetchRegistrationUser.fulfilled, (state, action: PayloadAction<Token>) => {
 			state.loading = Status.SUCCEEDED;
-			state.isAuth = true;
 			state.errorMessage = '';
+			state.user = { email: '', password: '', isMan: false };
 		});
 
 		builder.addCase(fetchRegistrationUser.rejected, (state, action: any) => {
+			console.log(action.payload.data.errors[0].msg);
 			state.loading = Status.FAILED;
-			state.errorMessage = action.payload.message;
+			state.errorMessage = action.payload.data.errors[0].msg;
 		});
 	},
 });
 
-export const { setName, setUsername, setEmail, setPassword, setIsMAn, setAge, setIsAuth } =
+export const { setName, setUsername, setEmail, setPassword, setIsMAn, setAge, setLoading } =
 	registrationSlice.actions;
 
 export default registrationSlice.reducer;

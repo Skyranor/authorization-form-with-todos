@@ -11,13 +11,6 @@ body {
 	justify-content: flex-end;
 }
 
-.navbar-email {
-	margin-right: 10px;
-	color: rgb(220, 227, 233);
-	font-size: 15px;
-	font-weight: 600;
-}
-
 .login {
 	display: flex;
 	flex-direction: column;
@@ -41,7 +34,7 @@ body {
 }
 
 .todo-title {
-	color: white;
+	color: var(--text);
 	font-size: 40px;
 }
 
@@ -98,13 +91,6 @@ body {
 	text-decoration: line-through;
 }
 
-.task p {
-	font-size: 18px;
-	font-weight: 500;
-	margin: 0;
-	color: var(--text);
-}
-
 .task-buttons-wrapper {
 	display: flex;
 	gap: 20px;
@@ -135,20 +121,4 @@ body {
 .task-buttons-wrapper button:active {
 	color: black;
 	transform: scale(1.25);
-}
-
-.task-done {
-	background-color: #00000027;
-}
-.task-done p {
-	color: #00000050;
-}
-
-.action-btn {
-	cursor: pointer;
-	margin-left: 10px;
-}
-.action-btn:hover {
-	background-color: #04395e3d;
-	border-radius: 5px;
 }

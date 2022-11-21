@@ -22,8 +22,11 @@ const authSlice = createSlice({
 		setPassword(state, action: PayloadAction<string>) {
 			state.user.password = action.payload;
 		},
-		settoken(state, action: PayloadAction<string>) {
+		setToken(state, action: PayloadAction<string>) {
 			state.token = action.payload;
+		},
+		setErrorMessage(state, action: PayloadAction<string>) {
+			state.errorMessage = '';
 		},
 	},
 
@@ -31,24 +34,21 @@ const authSlice = createSlice({
 		builder.addCase(fetchAuthUser.pending, (state, action) => {
 			state.loading = Status.PENDING;
 			state.errorMessage = '';
-			console.log(state, action);
 		});
 
 		builder.addCase(fetchAuthUser.fulfilled, (state, action: PayloadAction<Token>) => {
 			state.loading = Status.SUCCEEDED;
 			state.token = action.payload.token;
 			state.errorMessage = '';
-			console.log(state, action);
 		});
 
 		builder.addCase(fetchAuthUser.rejected, (state, action: any) => {
 			state.loading = Status.FAILED;
 			state.errorMessage = action.payload.message;
-			console.log(state, action);
 		});
 	},
 });
 
-export const { setEmail, setPassword, settoken } = authSlice.actions;
+export const { setEmail, setPassword, setToken, setErrorMessage } = authSlice.actions;
 
 export default authSlice.reducer;
