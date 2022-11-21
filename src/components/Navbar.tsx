@@ -11,7 +11,7 @@ export const Navbar: React.FC = () => {
 	const menu = [{ key: 1, label: 'Выйти' }];
 
 	const logout = () => {
-		localStorage.removeItem('authToken');
+		localStorage.removeItem('token');
 		dispatch(setToken(''));
 		navigate(RouteNames.LOGIN);
 	};

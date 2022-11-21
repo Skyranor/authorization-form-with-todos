@@ -5,8 +5,10 @@ import { Token } from '../../../models/Token';
 import { fetchAuthUser } from './asyncActions';
 import { AuthState } from './types';
 
+const token = localStorage.getItem('token');
+
 export const initialState: AuthState = {
-	token: '',
+	token: token || '',
 	user: {} as IUser,
 	loading: Status.IDLE,
 	errorMessage: '',

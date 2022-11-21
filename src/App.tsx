@@ -4,14 +4,15 @@ import { Layout } from 'antd';
 import { AppRouter } from './components/AppRouter';
 import { Navbar } from './components/Navbar';
 
-import useIsAuth from './hooks/useIsAuth';
+import { useAppSelector } from './hooks/useAppSelector';
+import { selectAuth } from './store/slices/auth/selectors';
 
 const App = () => {
-	const isAuth = useIsAuth();
+	const { token } = useAppSelector(selectAuth);
 
 	return (
 		<Layout className='App'>
-			{isAuth ? <Navbar /> : null}
+			{token ? <Navbar /> : null}
 			<Layout.Content>
 				<AppRouter />
 			</Layout.Content>

@@ -11,7 +11,7 @@ export const fetchAuthUser = createAsyncThunk<Token, IUser>(
 				'https://first-node-js-app-r.herokuapp.com/api/auth/login',
 				user
 			);
-			localStorage.setItem('authToken', data.token);
+			localStorage.setItem('token', data.token);
 			return data;
 		} catch (error: any) {
 			return rejectWithValue(error.response.data);

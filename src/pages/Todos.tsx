@@ -12,13 +12,14 @@ import {
 } from '../store/slices/todos/asyncActions';
 import { selectTodos } from '../store/slices/todos/selectors';
 
+const colors = ['#3843e0', '#e3276c', '#ae27e3'];
+
 export const Todos = () => {
 	const dispatch = useAppDispatch();
 	const { todos } = useAppSelector(selectTodos);
-	const token = localStorage.getItem('authToken') as string;
 	const [todoTitle, setTodoTitle] = useState('');
 
-	const colors = ['#3843e0', '#e3276c', '#ae27e3'];
+	const token = localStorage.getItem('token') as string;
 
 	useEffect(() => {
 		dispatch(fetchTodos({ token }));

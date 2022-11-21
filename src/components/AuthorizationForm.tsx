@@ -71,10 +71,7 @@ export const AuthorizationForm: React.FC<PropsWithChildren<AuthorizationFormProp
 							},
 						]}
 						hasFeedback>
-						<Input.Password
-							min={8}
-							onChange={(e) => dispatch(setPassword(e.target.value))}
-						/>
+						<Input.Password min={8} onChange={(e) => dispatch(setPassword(e.target.value))} />
 					</Form.Item>
 
 					{children}

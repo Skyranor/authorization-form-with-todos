@@ -1,11 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import useIsAuth from '../hooks/useIsAuth';
+import { useAppSelector } from '../hooks/useAppSelector';
 import { privateRoutes, publicRoutes, RouteNames } from '../router';
+import { selectAuth } from '../store/slices/auth/selectors';
 
 export const AppRouter = () => {
-	const isAuth = useIsAuth();
+	const { token } = useAppSelector(selectAuth);
 
-	if (isAuth) {
+	if (token) {
 		return (
 			<Routes>
 				{privateRoutes.map((route) => (
