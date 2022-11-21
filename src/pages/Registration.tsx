@@ -29,7 +29,7 @@ export const Registration: React.FC = () => {
 		if (loading === Status.SUCCEEDED) {
 			navigate(RouteNames.LOGIN);
 		}
-		setLoading(Status.IDLE);
+		dispatch(setLoading(Status.IDLE));
 	}, [loading]);
 
 	const onFinish = async () => {

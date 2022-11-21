@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../../models/IUser';
 import { Status } from '../../../models/Status';
-import { Token } from '../../../models/Token';
 import { fetchRegistrationUser } from './asyncActions';
 import { RegistrationState } from './types';
 
@@ -43,19 +41,18 @@ const registrationSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchRegistrationUser.pending, (state, action) => {
+		builder.addCase(fetchRegistrationUser.pending, (state) => {
 			state.loading = Status.PENDING;
 			state.errorMessage = '';
 		});
 
-		builder.addCase(fetchRegistrationUser.fulfilled, (state, action: PayloadAction<Token>) => {
+		builder.addCase(fetchRegistrationUser.fulfilled, (state) => {
 			state.loading = Status.SUCCEEDED;
 			state.errorMessage = '';
 			state.user = { email: '', password: '', isMan: false };
 		});
 
 		builder.addCase(fetchRegistrationUser.rejected, (state, action: any) => {
-			console.log(action.payload.data.errors[0].msg);
 			state.loading = Status.FAILED;
 			state.errorMessage = action.payload.data.errors[0].msg;
 		});
